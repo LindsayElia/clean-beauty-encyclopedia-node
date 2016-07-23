@@ -1,0 +1,11 @@
+{
+  "name": "clean-beauty-encyclopedia",
+  "version": "1.0.0",
+  "description": "\"Search ingredients in clean beauty products\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lindsay Elia",
+  "license": "ISC"
+}
