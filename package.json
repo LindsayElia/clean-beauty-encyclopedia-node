@@ -1,11 +1,19 @@
 {
   "name": "clean-beauty-encyclopedia",
   "version": "1.0.0",
-  "description": "\"Search ingredients in clean beauty products\"",
+  "description": "Search ingredients in clean beauty products database.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lindsay Elia",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "dotenv": "^2.0.0",
+    "ejs": "^2.4.2",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "request": "^2.74.0"
+  }
 }
