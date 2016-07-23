@@ -4,4 +4,4 @@ A site where anyone will be able to search by ingredients, features, price, etc,
 
 Eventually, features such as aggregated reviews and showing users where they can sample, try in person, and buy products will be added.
 
-Project will be live at [www.cleanbeautyencyclopedia.com](www.cleanbeautyencyclopedia.com).
+Project will be live at [www.cleanbeautyencyclopedia.com](http://www.cleanbeautyencyclopedia.com/).
