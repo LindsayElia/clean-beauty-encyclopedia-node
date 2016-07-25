@@ -51,8 +51,6 @@ request(listOneLoveOrganics, function (error, response, listBody) {
 });
 
 
-// to do - remove modules not used from package.json, such as x-ray, stringify-safe
-
 
 //.pipe(fs.createWriteStream("scrapers/brands/oneloveorganics/" + count + ".txt"))
 
