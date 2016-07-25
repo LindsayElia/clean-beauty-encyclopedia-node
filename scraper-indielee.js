@@ -5,7 +5,6 @@ var cheerio = require("cheerio");
 var fs = require("fs");
 
 
-
 var productListIndieLee = "http://indielee.com/shop/all-products";
 
 
