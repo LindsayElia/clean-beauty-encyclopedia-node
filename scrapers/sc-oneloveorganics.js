@@ -7,7 +7,9 @@ var fs = require("fs");
 // product list page - page(s) containing links to all the products
 // prouct detail page - page containing information about a single product
 var listOneLoveOrganics = "http://shop.oneloveorganics.com/";
+var productData = [];
 
+// first request
 request(listOneLoveOrganics, function (error, response, listBody) {
 	if (error) {
 		console.log("Request to " + listOneLoveOrganics + " encountered an error: " + error);
@@ -21,10 +23,9 @@ request(listOneLoveOrganics, function (error, response, listBody) {
 	links.each(function(count, linkObj){
 		// console.log("count: " + count);
 		// console.log("linkObj: "+ linkObj);
-
 		var detailUrl = listOneLoveOrganics + $listBody(linkObj).attr("href");
 
-		// making a second request here to each url
+		// second request, to each url
 		// this is where I can specify what data to pull, and only save what I might use
 		// save as json file type? what will be easiest for putting into a database?
 		request(detailUrl, function (err, res, detailBody) {
@@ -34,14 +35,16 @@ request(listOneLoveOrganics, function (error, response, listBody) {
 			}
 
 			var $detailBody = cheerio.load(detailBody);
-			var name = $detailBody(".title").text();
-			var price = $detailBody(".price").text();
-			var size = $detailBody(".prod_size span").text();
-			var imageUrl = $detailBody(".main-image a img").attr("src");
-			var imageAlt = $detailBody(".main-image a img").attr("alt");
-			var ingredientsGrouping = $detailBody("#tab3").html();
-			console.log(name + "/////" + price + "/////" + size + "/////" + imageUrl + "/////" + imageAlt + "/////" +  ingredientsGrouping + "....................................");
-
+			var product = { name:"", price:"", size:"", imageUrl:"", imageAlt:"", ingredientsGrouping:"" };
+				product.name = $detailBody(".title").text();
+				product.price = $detailBody(".price").text();
+				product.size = $detailBody(".prod_size span").text();
+				product.imageUrl = $detailBody(".main-image a img").attr("src");
+				product.imageAlt = $detailBody(".main-image a img").attr("alt");
+				product.ingredientsGrouping = $detailBody("#tab3").html();
+			// console.log(name + "/////" + price + "/////" + size + "/////" + imageUrl + "/////" + imageAlt + "/////" +  ingredientsGrouping + "....................................");
+			console.log("product: " + product);
+			productData.push(product);
 			
 
 		});
