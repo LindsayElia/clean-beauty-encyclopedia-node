@@ -1,0 +1,86 @@
+// require modules
+var request = require("request");
+var cheerio = require("cheerio");
+var fs = require("fs");
+// var q = require("q");
+var sanitizeHtml = require("sanitize-html");
+
+// product list page - page(s) containing links to all the products
+// prouct detail page - page containing information about a single product
+var listIndieLee = "http://indielee.com/shop/all-products";
+var productData = [];
+
+// first request, to get list of links to product detail pages
+var getList = function(listUrl){
+	request(listUrl, function (error, response, listBody) {
+		if (error) {
+			console.log("Request to " + listUrl + " encountered an error: " + error);
+			return;
+		}
+		// if no error, continue
+		// load the body of the page into cheerio so we can traverse the DOM
+		var $listBody = cheerio.load(listBody);
+		var links = $listBody(".item a");
+		// need this function, below, to access the href inside of the a element, instead of the whole element
+		links.each(function(count, linkObj){
+			var detailUrl = listUrl + $listBody(linkObj).attr("href");
+			console.log(detailUrl);
+			// call the getDetails function
+			// getDetails(detailUrl);
+		});
+	}).on('response', function(response){
+		console.log("getList responseStatusCode: " + response.statusCode);
+		console.log("getList responseHeaders: " + response.headers['content-type']);
+	});
+};
+
+// second request, to each url
+var getDetails = function(detailUrl){
+	request(detailUrl, function (err, res, detailBody) {
+		if (err) {
+			console.log("Request to " + detailUrl + " encountered an error: " + err);
+			return;
+		}
+		// if no error, continue
+		var $detailBody = cheerio.load(detailBody);
+		var product = { name:"", price:"", size:"", imageUrl:"", imageAlt:"", ingredientsGrouping:"" };
+			product.name = ($detailBody(".title").text()).trim(); // trim() removes all extra spaces
+			product.price = ($detailBody(".price").text()).trim();
+			product.size = $detailBody(".prod_size span").text();
+			product.imageUrl = ($detailBody(".main-image a img").attr("src")).substr(2);
+			product.imageAlt = $detailBody(".main-image a img").attr("alt");
+			product.ingredientsGrouping = (sanitizeHtml(($detailBody("#tab3").html().trim()), {
+				allowedTags: [],
+				allowedAttributes: []
+			})).trim();
+		productData.push(product);
+	}).on('response', function(res){
+		console.log("getDetails responseStatusCode: " + res.statusCode);
+		console.log("getDetails responseHeaders: " + res.headers['content-type']);
+	});
+};
+
+var writeData = function(){
+	fs.writeFile("brands/oneloveorganics.json", JSON.stringify(productData, null, 4), function(){
+		console.log("value of productData from writeData: " + JSON.stringify(productData));
+		console.log("File for " + listOneLoveOrganics +" written");
+	});
+};
+
+
+
+getList(listIndieLee);
+
+// setTimeout is a cheat but it's what I can get to work for now.
+// need a better way to wait until the requests are all done, then calling writeData
+// look into using promises?
+setTimeout(function(){
+	writeData();
+}, 5000);
+
+
+
+
+
+
+
