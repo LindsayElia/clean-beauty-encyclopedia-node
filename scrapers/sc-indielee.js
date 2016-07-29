@@ -20,13 +20,13 @@ var getList = function(listUrl){
 		// if no error, continue
 		// load the body of the page into cheerio so we can traverse the DOM
 		var $listBody = cheerio.load(listBody);
-		var links = $listBody(".item a");
+		var links = $listBody(".product-image");
 		// need this function, below, to access the href inside of the a element, instead of the whole element
 		links.each(function(count, linkObj){
-			var detailUrl = listUrl + $listBody(linkObj).attr("href");
+			var detailUrl = $listBody(linkObj).attr("href");
 			console.log(detailUrl);
 			// call the getDetails function
-			// getDetails(detailUrl);
+			getDetails(detailUrl);
 		});
 	}).on('response', function(response){
 		console.log("getList responseStatusCode: " + response.statusCode);
@@ -44,15 +44,12 @@ var getDetails = function(detailUrl){
 		// if no error, continue
 		var $detailBody = cheerio.load(detailBody);
 		var product = { name:"", price:"", size:"", imageUrl:"", imageAlt:"", ingredientsGrouping:"" };
-			product.name = ($detailBody(".title").text()).trim(); // trim() removes all extra spaces
-			product.price = ($detailBody(".price").text()).trim();
-			product.size = $detailBody(".prod_size span").text();
-			product.imageUrl = ($detailBody(".main-image a img").attr("src")).substr(2);
-			product.imageAlt = $detailBody(".main-image a img").attr("alt");
-			product.ingredientsGrouping = (sanitizeHtml(($detailBody("#tab3").html().trim()), {
-				allowedTags: [],
-				allowedAttributes: []
-			})).trim();
+			product.name = $detailBody(".product-name h1").text();
+			product.price = $detailBody("span .price").text();
+			product.size = ($detailBody(".weight").text()).slice(0, -1); // remove last character from string
+			product.imageUrl = $detailBody("#image").attr("src");
+			product.imageAlt = $detailBody("#image").attr("alt");
+			product.ingredientsGrouping = ((($detailBody(".product-ingredients").text()).trim()).substr(11)).trim(); // remove first 11 characters from string and all spaces
 		productData.push(product);
 	}).on('response', function(res){
 		console.log("getDetails responseStatusCode: " + res.statusCode);
@@ -61,9 +58,9 @@ var getDetails = function(detailUrl){
 };
 
 var writeData = function(){
-	fs.writeFile("brands/oneloveorganics.json", JSON.stringify(productData, null, 4), function(){
+	fs.writeFile("brands/indielee.json", JSON.stringify(productData, null, 4), function(){
 		console.log("value of productData from writeData: " + JSON.stringify(productData));
-		console.log("File for " + listOneLoveOrganics +" written");
+		console.log("File for " + listIndieLee +" written");
 	});
 };
 

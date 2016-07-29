@@ -46,7 +46,7 @@ var getDetails = function(detailUrl){
 			product.name = ($detailBody(".title").text()).trim(); // trim() removes all extra spaces
 			product.price = ($detailBody(".price").text()).trim();
 			product.size = $detailBody(".prod_size span").text();
-			product.imageUrl = ($detailBody(".main-image a img").attr("src")).substr(2);
+			product.imageUrl = ($detailBody(".main-image a img").attr("src")).substr(2); // remove first 2 characters from string
 			product.imageAlt = $detailBody(".main-image a img").attr("alt");
 			product.ingredientsGrouping = (sanitizeHtml(($detailBody("#tab3").html().trim()), {
 				allowedTags: [],
