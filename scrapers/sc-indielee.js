@@ -2,7 +2,6 @@
 var request = require("request");
 var cheerio = require("cheerio");
 var fs = require("fs");
-// var q = require("q");
 var sanitizeHtml = require("sanitize-html");
 
 // product list page - page(s) containing links to all the products
@@ -73,7 +72,7 @@ getList(listIndieLee);
 // look into using promises?
 setTimeout(function(){
 	writeData();
-}, 5000);
+}, 10000); // 10 seconds
 
 
 
