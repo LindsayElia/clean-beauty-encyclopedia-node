@@ -9,11 +9,14 @@
   "author": "Lindsay Elia",
   "license": "ISC",
   "dependencies": {
+    "bookshelf": "^0.10.0",
     "cheerio": "^0.20.0",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.2",
     "express": "^4.14.0",
+    "knex": "^0.11.10",
     "morgan": "^1.7.0",
+    "pg": "^6.1.0",
     "request": "^2.74.0",
     "sanitize-html": "^1.13.0"
   }
