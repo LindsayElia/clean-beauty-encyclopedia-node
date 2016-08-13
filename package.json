@@ -14,7 +14,6 @@
     "ejs": "^2.4.2",
     "express": "^4.14.0",
     "morgan": "^1.7.0",
-    "node-fetch": "^1.6.0",
     "request": "^2.74.0",
     "sanitize-html": "^1.13.0"
   }
