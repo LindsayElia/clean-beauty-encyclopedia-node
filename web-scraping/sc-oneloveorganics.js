@@ -62,7 +62,7 @@ var getDetails = function(detailUrl){
 };
 
 var writeData = function(){
-	fs.writeFile("brands/oneloveorganics.json", JSON.stringify(productData, null, 4), function(){
+	fs.writeFile("brand-data/oneloveorganics.json", JSON.stringify(productData, null, 4), function(){
 		console.log("value of productData from writeData: " + JSON.stringify(productData));
 		console.log("File for " + listOneLoveOrganics +" written");
 	});

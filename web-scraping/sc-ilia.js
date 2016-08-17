@@ -6,7 +6,9 @@ var sanitizeHtml = require("sanitize-html");
 
 // product list page - page(s) containing links to all the products
 // prouct detail page - page containing information about a single product
-var listIndieLee = "http://indielee.com/shop/all-products";
+var listIlia = "https://iliabeauty.com/collections/all";
+var listIliaPageTwo = "https://iliabeauty.com/collections/all?page=2";
+var domainIlia = "https://iliabeauty.com";
 var productData = [];
 
 // first request, to get list of links to product detail pages
@@ -19,10 +21,10 @@ var getList = function(listUrl){
 		// if no error, continue
 		// load the body of the page into cheerio so we can traverse the DOM
 		var $listBody = cheerio.load(listBody);
-		var links = $listBody(".product-image");
+		var links = $listBody(".thumbnail a");
 		// need this function, below, to access the href inside of the a element, instead of the whole element
 		links.each(function(count, linkObj){
-			var detailUrl = $listBody(linkObj).attr("href");
+			var detailUrl = domainIlia + $listBody(linkObj).attr("href");
 			console.log(detailUrl);
 			// call the getDetails function
 			getDetails(detailUrl);
@@ -43,12 +45,13 @@ var getDetails = function(detailUrl){
 		// if no error, continue
 		var $detailBody = cheerio.load(detailBody);
 		var product = { name:"", price:"", size:"", imageUrl:"", imageAlt:"", ingredientsGrouping:"" };
-			product.name = $detailBody(".product-name h1").text();
-			product.price = $detailBody("span .price").text();
-			product.size = ($detailBody(".weight").text()).slice(0, -1); // remove last character from string
-			product.imageUrl = $detailBody("#image").attr("src");
-			product.imageAlt = $detailBody("#image").attr("alt");
-			product.ingredientsGrouping = ((($detailBody(".product-ingredients").text()).trim()).substr(11)).trim(); // remove first 11 characters from string and all spaces
+			product.name = $detailBody(".product_name").text();
+			product.price = ($detailBody("span .current_price").text()).trim();
+			// description, last paragraph?
+			// product.size = ($detailBody(".weight").text()).slice(0, -1); // remove last character from string
+			// product.imageUrl = $detailBody("#image").attr("src");
+			// product.imageAlt = $detailBody("#image").attr("alt");
+			// product.ingredientsGrouping = ((($detailBody(".product-ingredients").text()).trim()).substr(11)).trim(); // remove first 11 characters from string and all spaces
 		productData.push(product);
 	}).on('response', function(res){
 		console.log("getDetails responseStatusCode: " + res.statusCode);
@@ -57,15 +60,16 @@ var getDetails = function(detailUrl){
 };
 
 var writeData = function(){
-	fs.writeFile("brands/indielee.json", JSON.stringify(productData, null, 4), function(){
+	fs.writeFile("brand-data/ilia.json", JSON.stringify(productData, null, 4), function(){
 		console.log("value of productData from writeData: " + JSON.stringify(productData));
-		console.log("File for " + listIndieLee +" written");
+		console.log("File for " + listIlia +" written");
 	});
 };
 
 
 
-getList(listIndieLee);
+getList(listIlia);
+getList(listIliaPageTwo);
 
 // setTimeout is a cheat but it's what I can get to work for now.
 // need a better way to wait until the requests are all done, then calling writeData
