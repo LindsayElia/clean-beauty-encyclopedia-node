@@ -1,3 +1,5 @@
+// THIS IS MY ORIGINAL SCRAPER - TESTING OUT CHANGES ON THIS FILE
+
 // require modules
 var request = require("request");	// https://github.com/request/request
 var cheerio = require("cheerio");	// https://github.com/cheeriojs/cheerio
@@ -67,8 +69,6 @@ var writeData = function(){
 };
 
 
-
-// var action = Q.nfbind(getList);
 
 getList(listOneLoveOrganics);
 
