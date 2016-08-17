@@ -13,8 +13,8 @@ Project will be live at [www.cleanbeautyencyclopedia.com](http://www.cleanbeauty
 - Node Modules: see package.json
 
 #### Data Collection
-Product database is being compiled by scraping ingredient lists off of websites for brands that meet clean beauty criteria.
+Product database is being compiled by scraping information off of websites for brands that meet clean beauty criteria. Only brands that provide ingredient lists will be included.
 
 #### Future To Do's
-Eventually, features such as aggregate reviews and showing users where they can sample and/or buy products will be added.
+Features such as aggregate reviews and showing users where they can sample and/or buy products.
 
