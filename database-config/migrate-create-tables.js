@@ -3,9 +3,9 @@ var knex = require('../database-connection');
 
 // create brands table
 knex.schema.createTableIfNotExists('brands', function(table){
-	table.increments('brand_id');	// outputs to SQL: "brand_id" serial primary key
- 	table.text('brand_name');		// use .string or .text ? >> https://www.postgresql.org/docs/9.4/static/datatype-character.html
- 	table.text('website_url');
+	table.increments();				// outputs SQL: "id" serial primary key
+ 	table.text('name');
+ 	table.text('site_url');
  	table.text('hq_country');
  	table.text('hq_region');
  	table.text('hq_postal_code');
@@ -23,9 +23,9 @@ knex.schema.createTableIfNotExists('brands', function(table){
 
 // create products table
 knex.schema.createTableIfNotExists('products', function(table){
-	table.increments('prod_id');
-	table.text('prod_name');
-	table.text('prod_category');
+	table.increments();
+	table.text('name');
+	table.text('category');
 	table.text('application_type');
 	table.decimal('price');
 	table.text('currency');
@@ -39,8 +39,8 @@ knex.schema.createTableIfNotExists('products', function(table){
 
 // create ingredients table
 knex.schema.createTableIfNotExists('ingredients', function(table){
-	table.increments('ingr_id');
-	table.text('ingr_name');
+	table.increments();
+	table.text('name');
 	table.text('alternate_names');
 	table.boolean('is_animal_derived');
 	table.boolean('is_organic');
