@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bookshelf": "^0.10.0",
+    "bookshelf-modelbase": "^2.10.1",
     "cheerio": "^0.20.0",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.2",
