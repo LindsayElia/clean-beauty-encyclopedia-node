@@ -1,3 +1,6 @@
+// this is redundant now that we have migrate-create-tables.js
+// keep?
+
 var Schema = {
     brands: {
         id: {type: 'serial', primary: true, nullable: false},
@@ -38,31 +41,6 @@ var Schema = {
 module.exports = Schema;
 
 
-// for reference, help getting started with bookshelf:
-// http://blog.ragingflame.co.za/2014/7/21/using-nodejs-with-mysql
-// note that this is with mysql instead of postgres, so not everything will be the same
 
-// nullable = means that it will accept 'null' as a value
-// postgress doesn't allow primary keys to be 'null' value, but
-// knex defaults to setting columns as nullable so it doesn't hurt to specify otherwise
-
-// unsigned = value is a positive integer, can not be negative
-
-// should I use 'serial' instead of 'increments' with postgres?
-// yes
-// https://www.postgresql.org/docs/9.4/static/datatype-numeric.html
-
-// is there a 'money' value in postgres? or use decimal?
-// yes, but since currency can differ and I don't need fractional precision 
-// (the values are static, we're not performin calculations on them)
-// we can use decimal.
-// https://www.postgresql.org/docs/9.4/static/datatype-money.html
-// https://www.postgresql.org/docs/9.4/static/datatype-numeric.html#DATATYPE-SERIAL
-
-// difference between 'unique' and 'primary' ?
-// postgres documentation shows 'primary' as being equivalent to both 'unique' and 'not null'
-// https://www.postgresql.org/docs/8.1/static/ddl-constraints.html
-
-// ensure i'm not re-writing tables if they already exist...
 
 
